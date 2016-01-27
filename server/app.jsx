@@ -1,7 +1,14 @@
 if (Meteor.isServer) {
     Locations = new Mongo.Collection("locations");
     Messages = new Mongo.Collection("messages");
-
+    if(Locations.find({}).count()==0){
+        Locations.insert({text: 'Ukraine'});
+        Locations.insert({text: 'USA'});
+        Locations.insert({text: 'Poland'});
+        Locations.insert({text: 'China'});
+        Locations.insert({text: 'England'});
+        Locations.insert({text: 'Canada'});
+    }
     Meteor.publish("messages", function () {
         return Messages.find({});
     });
