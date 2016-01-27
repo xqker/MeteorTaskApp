@@ -45,6 +45,7 @@ Home = React.createClass({
                                     type="text"
                                     name="textInput"
                                     placeholder="Type to broadcast new message" />
+                                <input type="submit" value="Send" className="btn btn-default"/>
                             </form>
                             <div className="list-group" >
                                  { this.renderMessaged() }
