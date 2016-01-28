@@ -3,12 +3,25 @@ Meteor.subscribe("messages");
 
 Home = React.createClass({
     mixins:[ReactMeteorData],
-
+    getInitialState() {
+        return {
+            errorMessage: ''
+        }
+    },
     handleSubmit(e){
+        this.setState({
+            errorMessage: ''
+        });
         e.preventDefault();
         if(!this.data.userLocation)
-            Meteor.Error('To post message you must to choose your location');
+            this.setState({
+                errorMessage: 'you need to set location in your profile;'
+            });
         var text = e.target.textInput.value;
+        if(!text)
+            this.setState({
+                errorMessage: ' write some text;' + this.state.errorMessage
+            });
         Meteor.call("addNewMessage",text);
         e.target.textInput.value="";
     },
@@ -46,6 +59,7 @@ Home = React.createClass({
                                     name="textInput"
                                     placeholder="Type to broadcast new message" />
                                 <input type="submit" value="Send" className="btn btn-default"/>
+                                <div className = "text-danger"> { this.state.errorMessage } </div>
                             </form>
                             <div className="list-group" >
                                  { this.renderMessaged() }
